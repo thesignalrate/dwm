@@ -132,6 +132,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE} },
 /// functionalgap_end
+/// shiftview_begin
+	{ ALTKEY,              XK_i,           view_adjacent,  { .i = +1 } },
+	{ ALTKEY,              XK_u,           view_adjacent,  { .i = -1 } },
+/// shiftview_end
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
