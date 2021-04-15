@@ -113,6 +113,9 @@ static Key keys[] = {
 /// actualfullscreen_begin
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 /// actualfullscreen_end
+/// alwaysontop_begin
+	{ ALTKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
+/// alwaysontop_end
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
