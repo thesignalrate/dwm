@@ -164,6 +164,9 @@ static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
 static Monitor *createmon(void);
+/// cyclelayouts_begin
+static void cyclelayout(const Arg* arg);
+/// cyclelayouts_end
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
@@ -2385,4 +2388,22 @@ centeredfloatingmaster(Monitor *m)
 			 m->wh - (2*c->bw), 0);
 	  tx += WIDTH(c);
 	}
+}
+
+/// cyclelayouts_impl
+void
+cyclelayout(const Arg *arg) {
+  Layout *l;
+  for(l = (Layout *)layouts; l != selmon->lt[selmon->sellt]; l++);
+  if(arg->i > 0) {
+	if(l->symbol && (l + 1)->symbol)
+	  setlayout(&((Arg) { .v = (l + 1) }));
+	else
+	  setlayout(&((Arg) { .v = layouts }));
+  } else {
+	if(l != layouts && (l - 1)->symbol)
+	  setlayout(&((Arg) { .v = (l - 1) }));
+	else
+	  setlayout(&((Arg) { .v = &layouts[LENGTH(layouts) - 2] }));
+  }
 }
