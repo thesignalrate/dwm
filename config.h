@@ -110,6 +110,9 @@ static Key keys[] = {
 /// cyclelayouts_end
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+/// actualfullscreen_begin
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
+/// actualfullscreen_end
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
