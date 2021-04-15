@@ -42,7 +42,7 @@ static const Rule rules[] = {
   ///  } Rule;
 
   { "Gimp",      NULL,       NULL,       0,            1,           1.0,		-1 },
-  { "firefox",   NULL,       NULL,       1 << 8,       0,           1.0,		-1 },
+  { "firefox",   NULL,       NULL,       0,            0,           1.0,		-1 },
   { "Alacritty", NULL,       NULL,       0,            0,           defaultopacity, -1},
 };
 
