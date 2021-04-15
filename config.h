@@ -37,13 +37,13 @@ static const Rule rules[] = {
   ///	const char *title;
   ///	unsigned int tags;
   ///	int isfloating;
-  ///    double opacity;
+  ///    double opacity; // 0 means left it to the compositor configurations.
   ///	int monitor;
   ///  } Rule;
 
-  { "Gimp",      NULL,       NULL,       0,            1,           1.0,		-1 },
-  { "firefox",   NULL,       NULL,       0,            0,           1.0,		-1 },
-  { "Alacritty", NULL,       NULL,       0,            0,           defaultopacity, -1},
+  { "Gimp",      NULL,       NULL,       0,            1,           0.0,		-1 },
+  { "firefox",   NULL,       NULL,       0,            0,           0.0,		-1 },
+  { "Alacritty", NULL,       NULL,       0,            0,           0.0,        -1 },
 };
 
 /* layout(s) */
