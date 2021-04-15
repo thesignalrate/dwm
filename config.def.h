@@ -115,6 +115,7 @@ static Key keys[] = {
 /// actualfullscreen_end
 /// alwaysontop_begin
 	{ ALTKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
+    { ALTKEY|ShiftMask,             XK_Return, unalwaysontop_all, {0} },
 /// alwaysontop_end
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -133,8 +134,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE} },
 /// functionalgap_end
 /// shiftview_begin
-	{ ALTKEY,              XK_i,           view_adjacent,  { .i = +1 } },
-	{ ALTKEY,              XK_u,           view_adjacent,  { .i = -1 } },
+	{ ALTKEY,              XK_i,           shiftview,  { .i = +1 } },
+	{ ALTKEY,              XK_u,           shiftview,  { .i = -1 } },
 /// shiftview_end
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)

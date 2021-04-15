@@ -232,7 +232,11 @@ static void togglefullscr(const Arg *arg);
 /// actualfullscreen_end
 /// alwaysontop_begin
 static void togglealwaysontop(const Arg *arg);
+static void unalwaysontop_all(const Arg *arg);
 /// alwaysontop_end
+/// shiftview_begin
+static void shiftview(const Arg *arg);
+/// shiftview_end
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -2469,6 +2473,17 @@ togglealwaysontop(const Arg *arg)
 	selmon->sel->isalwaysontop = 1;
   }
 
+  arrange(selmon);
+}
+
+void unalwaysontop_all(const Arg *arg) {
+  if (!selmon->sel)
+	return;
+  if (selmon->sel->isfullscreen)
+	return;
+  for(Monitor *m = mons; m; m = m->next)
+	for(Client *c = m->clients; c; c = c->next)
+	  c->isalwaysontop = 0;
   arrange(selmon);
 }
 
