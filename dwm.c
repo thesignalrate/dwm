@@ -95,9 +95,9 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 /// int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
-/// alwaysontop_begin (edited)
-	int isfixed, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen;
-/// alwaysontop_end 
+/// alwaysontop_begin{isalwaysontop} && maximize_begin{ismax, was_floating} (edited)
+	int ismax, wasfloating, isfixed, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen;
+/// alwaysontop_end && maximize_end
 	Client *next;
 	Client *snext;
     double opacity;
@@ -240,6 +240,12 @@ static void unalwaysontop_all(const Arg *arg);
 /// shiftview_begin
 static void shiftview(const Arg *arg);
 /// shiftview_end
+/// maximize_begin
+static void maximize(int x, int y, int w, int h);
+static void togglemaximize(const Arg *arg);
+static void toggleverticalmax(const Arg *arg);
+static void togglehorizontalmax(const Arg *arg);
+/// maximize_end
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -1116,6 +1122,10 @@ manage(Window w, XWindowAttributes *wa)
 	updatewmhints(c);
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
+/// maximize_begin
+	c->wasfloating = 0;
+	c->ismax = 0;
+/// maximize_end
 	if (!c->isfloating)
 		c->isfloating = c->oldstate = trans != None || c->isfixed;
 	if (c->isfloating)
@@ -2614,3 +2624,51 @@ grid(Monitor *m) {
 	i++;
   }
 }
+
+/// maximize_impl
+void
+maximize(int x, int y, int w, int h) {
+  XEvent ev;
+
+  if(!selmon->sel || selmon->sel->isfixed)
+	return;
+  XRaiseWindow(dpy, selmon->sel->win);
+  if(!selmon->sel->ismax) {
+	if(!selmon->lt[selmon->sellt]->arrange || selmon->sel->isfloating)
+	  selmon->sel->wasfloating = True;
+	else {
+	  togglefloating(NULL);
+	  selmon->sel->wasfloating = False;
+	}
+	selmon->sel->oldx = selmon->sel->x;
+	selmon->sel->oldy = selmon->sel->y;
+	selmon->sel->oldw = selmon->sel->w;
+	selmon->sel->oldh = selmon->sel->h;
+	resize(selmon->sel, x, y, w, h, True);
+	selmon->sel->ismax = True;
+  }
+  else {
+	resize(selmon->sel, selmon->sel->oldx, selmon->sel->oldy, selmon->sel->oldw, selmon->sel->oldh, True);
+	if(!selmon->sel->wasfloating)
+	  togglefloating(NULL);
+	selmon->sel->ismax = False;
+  }
+  drawbar(selmon);
+  while(XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+}
+
+void
+togglemaximize(const Arg *arg) {
+  maximize(selmon->wx, selmon->wy, selmon->ww - 2 * borderpx, selmon->wh - 2 * borderpx);
+}
+
+void
+toggleverticalmax(const Arg *arg) {
+  maximize(selmon->sel->x, selmon->wy, selmon->sel->w, selmon->wh - 2 * borderpx);
+}
+
+void
+togglehorizontalmax(const Arg *arg) {
+  maximize(selmon->wx, selmon->sel->y, selmon->ww - 2 * borderpx, selmon->sel->h);
+}
+

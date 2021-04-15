@@ -146,6 +146,13 @@ static Key keys[] = {
 	{ ALTKEY,              XK_i,           shiftview,  { .i = +1 } },
 	{ ALTKEY,              XK_u,           shiftview,  { .i = -1 } },
 /// shiftview_end
+/// maximize_begin
+	{ MODKEY|ControlMask|ShiftMask, XK_h,           togglehorizontalmax, {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_l,           togglehorizontalmax, {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_j,           toggleverticalmax,   {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   {0} },
+	{ MODKEY|ControlMask,           XK_m,           togglemaximize,      {0} },
+/// maximize_end
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
