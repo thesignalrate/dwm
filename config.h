@@ -61,6 +61,11 @@ static const Layout layouts[] = {
   { ">M>", centeredfloatingmaster },
 /// centeredmaster_end
 
+/// bottomstack_begin
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
+/// bottomstack_end
+
 /// cyclelayouts_begin
   { NULL, NULL }, /// should be the last
 /// cyclelayouts_end
