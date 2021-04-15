@@ -29,13 +29,17 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-  // class
-  // instance
-  // title
-  // tags mask
-  // isfloating
-  // opacity
-  // monitor
+
+  ///  typedef struct {
+  ///	const char *class;
+  ///	const char *instance;
+  ///	const char *title;
+  ///	unsigned int tags;
+  ///	int isfloating;
+  ///    double opacity;
+  ///	int monitor;
+  ///  } Rule;
+
   { "Gimp",     NULL,       NULL,       0,            1,           1.0,		-1 },
   { "Firefox",  NULL,       NULL,       1 << 8,       0,           1.0,		-1 },
   { "Alacritty",	      NULL,       NULL,       0,            0,           defaultopacity, -1},
@@ -47,10 +51,15 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+  /* symbol     arrange function */
+  { "[]=",      tile },    /* first entry is default */
+  { "><>",      NULL },    /* no layout function means floating behavior */
+  { "[M]",      monocle },
+
+/// centeredmaster_begin
+  { "|M|", centeredmaster },
+  { ">M>", centeredfloatingmaster },
+/// centeredmaster_end
 };
 
 /* key definitions */
@@ -87,20 +96,28 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+/// centeredmaster_begin
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
+/// centeredmaster_end
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+/// clientopacity_begin
     { MODKEY|ShiftMask,             XK_KP_Add, changeopacity,  {.f = +0.1}},
     { MODKEY|ShiftMask,             XK_KP_Subtract, changeopacity,  {.f = -0.1}},
+/// clientopacity_end
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+/// functionalgap_begin
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,  setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = GAP_TOGGLE} },
+/// functionalgap_end
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
