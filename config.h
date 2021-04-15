@@ -1,13 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int startwithgaps	     = 1;	    /* 1 means gaps are used by default */
 static const unsigned int gappx     = 20;       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const double defaultopacity  = 0.60;     
+static const double defaultopacity  = 0.75;     
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
@@ -15,10 +15,11 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const char col_blue[]        = "#072f75";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_blue  },
 };
 
 /* tagging */
@@ -40,9 +41,9 @@ static const Rule rules[] = {
   ///	int monitor;
   ///  } Rule;
 
-  { "Gimp",     NULL,       NULL,       0,            1,           1.0,		-1 },
-  { "Firefox",  NULL,       NULL,       1 << 8,       0,           1.0,		-1 },
-  { "Alacritty",	      NULL,       NULL,       0,            0,           defaultopacity, -1},
+  { "Gimp",      NULL,       NULL,       0,            1,           1.0,		-1 },
+  { "Firefox",   NULL,       NULL,       1 << 8,       0,           1.0,		-1 },
+  { "Alacritty", NULL,       NULL,       0,            0,           defaultopacity, -1},
 };
 
 /* layout(s) */
@@ -153,6 +154,11 @@ static Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   {0} },
 	{ MODKEY|ControlMask,           XK_m,           togglemaximize,      {0} },
 /// maximize_end
+/// defaultopacity_begin
+	{ MODKEY|ShiftMask,		XK_s,	   spawn,	   SHCMD("transset-df -a --dec .1") },
+	{ MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("transset-df -a --inc .1") },
+	{ MODKEY|ShiftMask,		XK_f,	   spawn,	   SHCMD("transset-df -a .75") },
+/// defaultopacity_end
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
