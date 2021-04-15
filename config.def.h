@@ -66,6 +66,10 @@ static const Layout layouts[] = {
 	{ "===",      bstackhoriz },
 /// bottomstack_end
 
+/// grid_begin
+	{ "HHH",      grid },
+/// grid_end
+
 /// cyclelayouts_begin
   { NULL, NULL }, /// should be the last
 /// cyclelayouts_end
