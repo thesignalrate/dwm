@@ -24,6 +24,7 @@ static const char *colors[][3]      = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -156,6 +157,9 @@ static Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_k,           toggleverticalmax,   {0} },
 	{ MODKEY|ControlMask,           XK_m,           togglemaximize,      {0} },
 /// maximize_end
+/// alternativetags_begin
+	{ MODKEY|ShiftMask,                       XK_n,      togglealttag,   {0} },
+/// alternativetags_end
 /// defaultopacity_begin
 //	{ MODKEY|ShiftMask,		XK_s,	   spawn,	   SHCMD("transset-df -a --dec .1") },
 //	{ MODKEY|ShiftMask,		XK_d,	   spawn,	   SHCMD("transset-df -a --inc .1") },

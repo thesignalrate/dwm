@@ -138,6 +138,9 @@ struct Monitor {
 	Monitor *next;
 	Window barwin;
 	const Layout *lt[2];
+/// alternativetags_begin
+    unsigned int alttag;
+/// alternativetags_end
 };
 
 typedef struct {
@@ -233,6 +236,9 @@ static void spawn(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *);
+/// alternativetags_begin
+static void togglealttag();
+/// alternativetags_end
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 /// actualfullscreen_begin
@@ -750,6 +756,9 @@ void
 drawbar(Monitor *m)
 {
 	int x, w, tw = 0;
+/// alternativetags_begin;
+	int wdelta;
+/// alternativetags_end
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
@@ -770,8 +779,12 @@ drawbar(Monitor *m)
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		w = TEXTW(tags[i]);
+		wdelta = selmon->alttag ? abs(TEXTW(tags[i]) - TEXTW(tagsalt[i])) / 2 : 0;
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+		///drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+		/// alternativetags_begin
+		drw_text(drw, x, 0, w, bh, wdelta + lrpad / 2, (selmon->alttag ? tagsalt[i] : tags[i]), urg & 1 << i);
+		/// alternativetags_end
 		if (occ & 1 << i)
 			drw_rect(drw, x + boxs, boxs, boxw, boxw,
 				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
@@ -2735,4 +2748,12 @@ rotatestack(const Arg *arg)
 	focus(f);
 	restack(selmon);
   }
+}
+
+/// alternativetags_impl
+void
+togglealttag()
+{
+  selmon->alttag = !selmon->alttag;
+  drawbar(selmon);
 }
