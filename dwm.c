@@ -2674,3 +2674,28 @@ togglehorizontalmax(const Arg *arg) {
   maximize(selmon->wx, selmon->sel->y, selmon->ww - 2 * borderpx, selmon->sel->h);
 }
 
+/// rotatestack_impl
+void rotate_stack(Monitor *m) {
+  if (m) {
+	Client *stack = m->stack;
+	Client *itr;
+	Client *nl = stack;
+	Client *last = stack;
+	for (; itr=last->snext; itr!=NULL) {
+	  nl = last;
+	  last = itr;
+	}
+	last->snext = stack;
+	nl->snext = NULL;
+	m->stack = last;
+	arrange(m);
+  } else {
+
+  }
+}
+
+void rotatestack(const Arg *arg){
+  rotate_stack(selmon);
+}
+
+

@@ -87,7 +87,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
+static void rotatestack(const  Arg *arg);
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
@@ -146,6 +146,7 @@ static Key keys[] = {
 /// shiftview_begin
 	{ MODKEY,              XK_Right,           shiftview,  { .i = +1 } },
 	{ MODKEY,              XK_Left,           shiftview,  { .i = -1 } },
+	{ MODKEY|ShiftMask, XK_Left, rotatestack, {0} },
 /// shiftview_end
 /// maximize_begin
 	{ MODKEY|ControlMask|ShiftMask, XK_h,           togglehorizontalmax, {0} },
