@@ -2678,12 +2678,13 @@ togglehorizontalmax(const Arg *arg) {
 void rotate_stack(Monitor *m) {
   if (m) {
 	Client *stack = m->stack;
-	Client *itr;
+	Client *itr = stack;
 	Client *nl = stack;
 	Client *last = stack;
-	for (; itr=last->snext; itr!=NULL) {
+	while (itr!=NULL) {
 	  nl = last;
 	  last = itr;
+	  itr = last->next;
 	}
 	last->snext = stack;
 	nl->snext = NULL;
