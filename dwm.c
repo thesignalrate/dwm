@@ -2675,29 +2675,19 @@ togglehorizontalmax(const Arg *arg) {
 }
 
 /// rotatestack_impl
-void rotate_stack(Monitor *m) {
-  if (m) {
-	exit (1);
-	Client *stack = m->stack;
-	Client *itr = stack;
-	Client *nl = stack;
-	Client *last = stack;
-	while (itr!=NULL) {
-	  nl = last;
-	  last = itr;
-	  itr = last->next;
-	}
-	last->snext = stack;
-	nl->snext = NULL;
-	m->stack = last;
-	arrange(m);
-  } else {
-
-  }
-}
 
 void rotatestack(const Arg *arg){
-  rotate_stack(selmon);
+  Client *l = nexttiled(selmon->clients);
+  Client *i = l, *c;
+  for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
+  if (c) {
+	i = l;
+	l = c;
+  }
+
+  selmon->clients = l;
+  i->next = NULL;
+  arrange(selmon);
 }
 
 
