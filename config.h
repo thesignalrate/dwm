@@ -146,7 +146,8 @@ static Key keys[] = {
 /// shiftview_begin
 	{ MODKEY,              XK_Right,           shiftview,  { .i = +1 } },
 	{ MODKEY,              XK_Left,           shiftview,  { .i = -1 } },
-	{ MODKEY|ShiftMask, XK_Left, rotatestack, {0} },
+	{ MODKEY|ShiftMask, XK_Left, rotatestack, {.i = -1} },
+	{ MODKEY|ShiftMask, XK_Right, rotatestack, {.i = +1} },
 /// shiftview_end
 /// maximize_begin
 	{ MODKEY|ControlMask|ShiftMask, XK_h,           togglehorizontalmax, {0} },

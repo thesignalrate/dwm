@@ -176,6 +176,11 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
+/// rotatestack_impl
+static void enqueue(Client *c);
+static void enqueuestack(Client *c);
+static void rotatestack(const Arg *arg);
+/// rotatestack_impl
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
@@ -2676,19 +2681,58 @@ togglehorizontalmax(const Arg *arg) {
 
 /// rotatestack_impl
 
-void rotatestack(const Arg *arg){
-  Client *l = nexttiled(selmon->clients);
-  Client *i = l, *c;
-  for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
-  if (c) {
-	i = l;
-	l = c;
+void
+enqueue(Client *c)
+{
+  Client *l;
+  for (l = c->mon->clients; l && l->next; l = l->next);
+  if (l) {
+	l->next = c;
+	c->next = NULL;
   }
+}
 
-  selmon->clients = l;
-  i->next = NULL;
-  arrange(selmon);
-  restack(selmon);
+void
+enqueuestack(Client *c)
+{
+  Client *l;
+  for (l = c->mon->stack; l && l->snext; l = l->snext);
+  if (l) {
+	l->snext = c;
+	c->snext = NULL;
+  }
 }
 
 
+ 
+void
+rotatestack(const Arg *arg)
+{
+  Client *c = NULL, *f;
+
+  if (!selmon->sel)
+	return;
+  f = selmon->sel;
+  if (arg->i > 0) {
+	for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
+	if (c){
+	  detach(c);
+	  attach(c);
+	  detachstack(c);
+	  attachstack(c);
+	}
+  } else {
+	if ((c = nexttiled(selmon->clients))){
+	  detach(c);
+	  enqueue(c);
+	  detachstack(c);
+	  enqueuestack(c);
+	}
+  }
+  if (c){
+	arrange(selmon);
+	//unfocus(f, 1);
+	focus(f);
+	restack(selmon);
+  }
+}
