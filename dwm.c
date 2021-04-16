@@ -2688,6 +2688,7 @@ void rotatestack(const Arg *arg){
   selmon->clients = l;
   i->next = NULL;
   arrange(selmon);
+  restack(selmon);
 }
 
 
