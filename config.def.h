@@ -110,6 +110,7 @@ static Key keys[] = {
   { MODKEY,                       XK_f,      zoom,           {0} },
   { MODKEY,                       XK_Tab,    view,           {0} },
   { MODKEY,                       XK_Escape,     killclient,     {0} },
+  { MODKEY,                       XK_BackSpace,  killclient, {0} },
   { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
   //	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
   //	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
