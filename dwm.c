@@ -1178,9 +1178,10 @@ manage(Window w, XWindowAttributes *wa)
 		(unsigned char *) &(c->win), 1);
 	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
 	setclientstate(c, NormalState);
-	if (c->mon == selmon)
+	if (c->mon == selmon && !selmon->sel)
 		unfocus(selmon->sel, 0);
-	//c->mon->sel = c;
+    if(!selmon->sel)
+	   c->mon->sel = c;
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
 	if(!selmon->sel)
