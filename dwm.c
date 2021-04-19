@@ -1180,12 +1180,12 @@ manage(Window w, XWindowAttributes *wa)
 	setclientstate(c, NormalState);
 	if (c->mon == selmon && !selmon->sel)
 		unfocus(selmon->sel, 0);
-    if(!selmon->sel)
+    if(!selmon->sel || selmon->sel==c)
 	   c->mon->sel = c;
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
-	if(!selmon->sel)
-    focus(NULL);
+	if(!selmon->sel || selmon->sel==c)
+        focus(NULL);
 }
 
 void
