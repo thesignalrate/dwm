@@ -856,7 +856,7 @@ enternotify(XEvent *e)
 	} else if (!c || c == selmon->sel)
 		return;
     // focus(c)
-
+/// WE DONT FONT FOCUS IF MOUSE ENTERS ANY OF THE WINDOWS
 /// attachaside_begin	(DO NOT FOCUS)
     if (monc)
 	  focus(c);
