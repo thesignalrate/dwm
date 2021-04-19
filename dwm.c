@@ -840,6 +840,7 @@ drawbars(void)
 void
 enternotify(XEvent *e)
 {
+    exit(1);
 	Client *c;
 	Monitor *m;
 	XCrossingEvent *ev = &e->xcrossing;
@@ -848,15 +849,17 @@ enternotify(XEvent *e)
 		return;
 	c = wintoclient(ev->window);
 	m = c ? c->mon : wintomon(ev->window);
+    int monc = 0;
 	if (m != selmon) {
-		//unfocus(selmon->sel, 1);
+		unfocus(selmon->sel, 1);
 		selmon = m;
+        monc = 1;
 	} else if (!c || c == selmon->sel)
 		return;
     // focus(c)
 
 /// attachaside_begin	(DO NOT FOCUS)
-    if (!selmon->sel)
+    if (!selmon->sel || monc)
 	  focus(c);
 /// attachaside_end
 }
