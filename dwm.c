@@ -850,7 +850,7 @@ enternotify(XEvent *e)
 	m = c ? c->mon : wintomon(ev->window);
     int monc = 0;
 	if (m != selmon) {
-		unfocus(selmon->sel, 1);
+		//unfocus(selmon->sel, 1);
 		selmon = m;
         monc = 1;
 	} else if (!c || c == selmon->sel)
@@ -859,7 +859,7 @@ enternotify(XEvent *e)
 
 /// attachaside_begin	(DO NOT FOCUS)
     //if (!selmon->sel || monc)
-	  focus(c);
+	 // focus(c);
 /// attachaside_end
 }
 
