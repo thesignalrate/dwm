@@ -858,8 +858,8 @@ enternotify(XEvent *e)
     // focus(c)
 
 /// attachaside_begin	(DO NOT FOCUS)
-    if (!selmon->sel || monc)
-	  focus(c);
+    //if (!selmon->sel || monc)
+	  //focus(c);
 /// attachaside_end
 }
 
