@@ -46,6 +46,7 @@ static const Rule rules[] = {
   { "firefox",   NULL,       NULL,       1<<1,            0,           0.0,		-1 },
   { "firefox", "Devtools", NULL, 0, 1, 0.0, -1 },
 ///  { "Alacritty", NULL,       NULL,       0,            0,           0.0,        -1 },
+  { "mpv", NULL, "video0 - mpv", 0, 1, 0, -1 },
 };
 
 /* layout(s) */
