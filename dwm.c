@@ -950,7 +950,7 @@ focusstack(const Arg *arg)
 				if (ISVISIBLE(i))
 					c = i;
 	}
-	if (c && !selmon->sel) {
+	if (c) {
 		focus(c);
 		restack(selmon);
 	}
@@ -1180,10 +1180,11 @@ manage(Window w, XWindowAttributes *wa)
 	setclientstate(c, NormalState);
 	if (c->mon == selmon)
 		unfocus(selmon->sel, 0);
-	c->mon->sel = c;
+	//c->mon->sel = c;
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
-	focus(NULL);
+	if(!selmon->sel)
+    focus(NULL);
 }
 
 void
